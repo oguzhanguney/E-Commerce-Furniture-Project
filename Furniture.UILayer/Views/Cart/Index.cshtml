@@ -1,0 +1,153 @@
+﻿@model CardItemViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Index.cshtml";
+    double totalAll = 0;
+}
+
+
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+                            <li class="breadcrumb-item active">Sepet</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-main-area pt-100px pb-100px">
+    <div class="container">
+        <h3 class="cart-page-title">Sepetim</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Görsel</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Fiyat</th>
+                                    <th>Adet</th>
+                                    <th>Toplam</th>
+                                    <th>Aksiyon</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.CardItems.Count != 0)
+                                {
+                                    @foreach (var item in Model.CardItems)
+                                    {
+                                        var totalPrice = (item.Product.Price * item.Quantity);
+                                        totalAll += totalPrice;
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <a href="/Product/Detail/@item.Product.ProductID"><img class="img-responsive ml-15px" src="@item.Product.ImageURL" alt="" /></a>
+                                            </td>
+                                            <td class="product-name"><a href="/Product/Detail/@item.Product.ProductID">@item.Product.Name</a></td>
+                                            <td class="product-price-cart"><span class="amount">₺@item.Product.Price</span></td>
+                                            <td class="product-quantity">
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="@item.Quantity" />
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal">₺@totalPrice</td>
+                                            <td class="product-remove">
+                                                <a href="/Cart/RemoveItem/@item.CardItemID"><i class="icon-close"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">Sepetinizde ürün bulunmamaktadır.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <div class="cart-shiping-update">
+                                    <a href="/Product/Index/">Alışverişe Devam Et</a>
+                                </div>
+                                <div class="cart-clear">
+                                    <a href="/Cart/Remove/@ViewBag.CardIdLast">Sepeti Temizle</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-lm-30px">
+                        @* Empty *@
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-lm-30px">
+                        <div class="discount-code-wrapper">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gray">Kupon  Kullan</h4>
+                            </div>
+                            <div class="discount-code">
+                                <p>Eğer kupon koduna sahipseniz, kupon kodunuzu giriniz.</p>
+                                <form>
+                                    <input type="text" required="" name="name" />
+                                    <button class="cart-btn-2" type="submit">Kuponu Uygula</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 mt-md-30px">
+                        <div class="grand-totall">
+                            <div class="title-wrap">
+                                <h4 class="cart-bottom-title section-bg-gary-cart">Sepet Tutarı</h4>
+                            </div>
+                            @if (Model.CardItems.Count != 0)
+                            {
+                                foreach (var item in Model.CardItems)
+                                {
+                                    var totalPrice = (item.Product.Price * item.Quantity);
+                                    <h5>@item.Product.Name <span>₺@totalPrice</span></h5>
+                                }
+                                <div class="total-shipping">
+                                </div>
+                                <h4 class="grand-totall-title">Toplam Tutar <span>₺@totalAll</span></h4>
+                                <a href="/Checkout/Index/">Ödeme İşlemine Git</a>
+                            }
+                            else
+                            {
+                                <h5>----- <span>-----</span></h5>
+                                <div class="total-shipping">
+                                </div>
+                                <h4 class="grand-totall-title">Toplam Tutar <span>₺0.00</span></h4>
+                                <button style="width: 100%; box-sizing: border-box;" onclick="return false;">
+                                    <a href="#">
+                                        Ödeme İşlemine Git
+                                    </a>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

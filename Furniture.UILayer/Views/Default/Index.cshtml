@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+<div class="offcanvas-overlay"></div>
+
+@await Component.InvokeAsync("_SliderPartial")
+
+@await Component.InvokeAsync("_ProductCatogoryPartial")
+
+@await Component.InvokeAsync("_OurProductsPartial")
+
+@await Component.InvokeAsync("_BannerPartial")
+
+@await Component.InvokeAsync("_InstaPartial")

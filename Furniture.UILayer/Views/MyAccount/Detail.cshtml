@@ -1,0 +1,48 @@
+﻿@model AccountOrdersModel
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Layout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="checkout-area pt-100px pb-100px">
+    <div class="container">
+        <div class="account-info-wrapper">
+            <h4>Sipariş Detayı</h4>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Sipariş Detay Numarası</th>
+                            <th>Ürün Adı</th>
+                            <th>Bírim Fiyatı</th>
+                            <th>Ürün Adedi</th>
+                            <th>Toplam Tutar</th>
+                            <th>Sipariş Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            count++;
+                            var orderTotal = item.Product.Price * item.Quantity;
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.OrderItemID</td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Price</td>
+                                <td>@item.Quantity</td>
+                                <td>@orderTotal</td>
+                                <td>@item.Order.CreatedDate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

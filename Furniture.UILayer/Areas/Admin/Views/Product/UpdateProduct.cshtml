@@ -1,0 +1,51 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Ürün Düzenleme Sayfası</h1>
+<br />
+<form method="post">
+    <input type="hidden" asp-for="ProductID" />
+    <div class="form-group">
+        @Html.Label("Brand ID")
+        <input type="text" asp-for="BrandID" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Kategori ID")
+        <input type="text" asp-for="CategoryID" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Ürün Adı")
+        <input type="text" asp-for="Name" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Fiyat")
+        <input type="text" asp-for="Price" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Ürün Rengi")
+        <input type="text" asp-for="Color" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Görsel URL")
+        <input type="text" asp-for="ImageURL" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.Label("Ürün Detayı")
+        <textarea cols="30" rows="5" asp-for="Description" class="form-control"></textarea>
+    </div>
+    <br />
+
+    <div class="btn-container">
+        <button class="btn btn-success">Ürünü Güncelle</button>
+    </div>
+</form>
+

@@ -1,0 +1,58 @@
+﻿@model AccountOrdersModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Siparişler /</span> Hepsi</h4>
+    <div class="card">
+        <h5 class="card-header">Tüm Siparişler</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Sipariş Numarası</th>
+                        <th>Email</th>
+                        <th>Adres</th>
+                        <th>Sipariş Notu</th>
+                        <th>Sipariş Tarihi</th>
+                        <th>Sipariş Durumu</th>
+                        <th>Sipariş İşlemi</th>
+                        <th>Diğer</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in Model.Orders)
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.OrderID</td>
+                            <td class="fab fa-angular fa-lg text-danger">@item.Email</td>
+                            <td>@item.District / @item.City</td>
+                            <td>@item.OrderNote</td>
+                            <td>@item.CreatedDate</td>
+                            <td><span class="badge bg-label-primary me-1">Onaylandı</span></td>
+                            <td><a href="/Admin/Order/Detail/@item.OrderID" class="btn btn-outline-warning">Detay</a></td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Sil</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

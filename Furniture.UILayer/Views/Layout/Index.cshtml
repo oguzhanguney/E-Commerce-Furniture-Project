@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+@* Header partial *@
+@await Html.PartialAsync("~/Views/LayoutPartial/_HeaderPartial.cshtml")
+<body>
+    <!-- Header Area start  -->
+    @* Navbar *@
+    @await Html.PartialAsync("~/Views/LayoutPartial/_NavbarPartial.cshtml")
+
+    <!-- Header Area End  -->
+
+    <!-- OffCanvas Cart Start -->
+    @* sepet: *@
+    @await Component.InvokeAsync("_DefaultCartComponentPartial")
+
+    <!-- OffCanvas Cart End -->
+    <!-- OffCanvas Menu Start -->
+    @* Menü Partial  *@
+    @await Html.PartialAsync("~/Views/LayoutPartial/_MenuPartial.cshtml")
+    <!-- OffCanvas Menu End -->
+    <div class="offcanvas-overlay"></div>
+
+
+    @RenderBody()
+
+
+    <div class="offcanvas-overlay"></div>
+
+    <!-- Footer Area Start -->
+    @await Html.PartialAsync("~/Views/LayoutPartial/_FooterPartial.cshtml")
+
+    <!-- Footer Area End -->
+    <!-- Modal -->
+    @await Html.PartialAsync("~/Views/LayoutPartial/_ModalPartial.cshtml")
+
+    <!-- Modal end -->
+
+    @* Scripts *@
+    @await Html.PartialAsync("~/Views/LayoutPartial/_ScriptsPartial.cshtml")
+
+
+</body>
+
+</html>

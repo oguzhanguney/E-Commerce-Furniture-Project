@@ -1,0 +1,355 @@
+﻿@model ProductCardViewModel
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+<script>
+    var quantityInput = document.querySelector('.cart-plus-minus-box');
+
+    quantityInput.addEventListener('change', function () {
+        var form = document.querySelector('form');
+        form.submit();
+    });
+</script>
+
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Ürün Detayı</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+                            <li class="breadcrumb-item"><a href="/Product/Index">Ürünler</a></li>
+                            <li class="breadcrumb-item active">Detay</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product-details-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
+                <!-- Swiper -->
+                <div class="swiper-container zoom-top">
+                    <div class="swiper-wrapper">
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            <div class="swiper-slide zoom-image-hover">
+                                <img class="img-responsive m-auto" src="@Model.Product.ImageURL" alt="">
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="swiper-container zoom-thumbs slider-nav-style-1 small-nav mt-15px mb-15px">
+                    <div class="swiper-wrapper">
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            <div class="swiper-slide">
+                                <img class="img-responsive m-auto" src="@Model.Product.ImageURL" alt="">
+                            </div>
+                        }
+                    </div>
+
+                    <div class="swiper-buttons">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-details-content quickview-content">
+                    <h2>@Model.Product.Brand.Name @Model.Product.Name @Model.Product.Category.Name @Model.Product.Color</h2>
+                    <p class="reference">Stok:<span> 12</span></p>
+                    <div class="pro-details-rating-wrap">
+                        <div class="rating-product">
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                        </div>
+                        <span class="read-review"><a class="reviews" href="#">Değerlendirmeler (2)</a></span>
+                    </div>
+                    <div class="pricing-meta">
+                        <ul>
+                            <li class="old-price not-cut">₺@Model.Product.Price</li>
+                        </ul>
+                    </div>
+                    <p class="quickview-para">@Model.Product.Description</p>
+                    <div class="pro-details-quality">
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form method="post">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" type="text" asp-for="CardItem.Quantity" value="1" />
+                                </div>
+                                <input type="hidden" value="@Model.Product.ProductID" asp-for="CardItem.ProductId" />
+                                <input type="hidden" value="@ViewBag.cardId" asp-for="CardItem.CardId" />
+
+                                <div class="pro-details-cart">
+                                    <button type="submit" class="add-cart btn btn-primary btn-hover-primary ml-4" href="/Product/Detail/@Model.Product.ProductID">
+                                        Sepete Ekle
+                                    </button>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" type="text" value="1" />
+                            </div>
+                            <div class="pro-details-cart">
+                                <button type="button" disabled class="add-cart btn btn-primary btn-hover-primary ml-4" href="#">
+                                    Sepete Ekle
+                                </button>
+                            </div>
+                        }
+
+
+                    </div>
+                    <div class="pro-details-wish-com">
+                        <div class="pro-details-wishlist">
+                            <a href="wishlist.html">
+                                <i class="ion-android-favorite-outline"></i>İstek Listesine Ekle
+                            </a>
+                        </div>
+                        <div class="pro-details-compare">
+                            <a href="compare.html"><i class="ion-ios-shuffle-strong"></i>Karşılaştır</a>
+                        </div>
+                    </div>
+                    <div class="pro-details-social-info">
+                        <span>Paylaş</span>
+                        <div class="social-info">
+                            <ul class="d-flex">
+                                <li>
+                                    <a href="#"><i class="ion-social-facebook"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ion-social-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ion-social-google"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ion-social-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pro-details-policy">
+                        <ul>
+                            <li>
+                                <img src="~/images/icons/policy.png" alt="" /><span>
+                                    Güvenli Ödeme
+                                </span>
+                            </li>
+                            <li>
+                                <img src="~/images/icons/policy-2.png" alt="" /><span>
+                                    Hızlı Teslimat
+                                </span>
+                            </li>
+                            <li>
+                                <img src="~/images/icons/policy-3.png" alt="" /><span>
+                                    Ücretsiz Kurulum
+                                </span>
+                            </li>
+                            <li>
+                                <img src="~/images/icons/policy.png" alt="" /><span>
+                                    2 Yıl Garantili
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="description-review-area pb-100px" data-aos="fade-up" data-aos-delay="200">
+    <div class="container">
+        <div class="description-review-wrapper">
+            <div class="description-review-topbar nav">
+                <a data-bs-toggle="tab" href="#des-details1">Ürün Açıklaması</a>
+                <a class="active" data-bs-toggle="tab" href="#des-details2">Ürün Özellikleri</a>
+                <a data-bs-toggle="tab" href="#des-details3">Değerlendirmeler (2)</a>
+            </div>
+            <div class="tab-content description-review-bottom">
+                <div id="des-details2" class="tab-pane active">
+                    <div class="product-anotherinfo-wrapper">
+                        <ul>
+                            <li><span>Ağırlık</span> 400 g</li>
+                            <li><span>Boyut</span>10 x 10 x 15 cm</li>
+                            <li><span>Malzeme</span> 60% cotton, 40% polyester</li>
+                            <li><span>Diğer Bilgiler</span> American heirloom jean shorts pug seitan letterpress</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="des-details1" class="tab-pane">
+                    <div class="product-description-wrapper">
+                        <p>
+                            @Model.Product.Description
+                        </p>
+                    </div>
+                </div>
+                <div id="des-details3" class="tab-pane">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="review-wrapper">
+                                <div class="single-review">
+                                    <div class="review-img">
+                                        <img src="assets/images/review-image/1.png" alt="" />
+                                    </div>
+                                    <div class="review-content">
+                                        <div class="review-top-wrap">
+                                            <div class="review-left">
+                                                <div class="review-name">
+                                                    <h4>Oğuzhan Güney</h4>
+                                                </div>
+                                                <div class="rating-product">
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                </div>
+                                            </div>
+                                            <div class="review-left">
+                                                <a href="#">Cevapla</a>
+                                            </div>
+                                        </div>
+                                        <div class="review-bottom">
+                                            <p>
+                                                Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper euismod vehicula. Phasellus quam nisi, congue id nulla.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-review child-review">
+                                    <div class="review-img">
+                                        <img src="assets/images/review-image/2.png" alt="" />
+                                    </div>
+                                    <div class="review-content">
+                                        <div class="review-top-wrap">
+                                            <div class="review-left">
+                                                <div class="review-name">
+                                                    <h4>Ali Can SARIBOĞA</h4>
+                                                </div>
+                                                <div class="rating-product">
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                    <i class="ion-android-star"></i>
+                                                </div>
+                                            </div>
+                                            <div class="review-left">
+                                                <a href="#">Cevapla</a>
+                                            </div>
+                                        </div>
+                                        <div class="review-bottom">
+                                            <p>Vestibulum ante ipsum primis aucibus orci luctustrices posuere cubilia Curae Sus pen disse viverra ed viverra. Mauris ullarper euismod vehicula.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="ratting-form-wrapper pl-50">
+                                <h3>Yorum Ekle</h3>
+                                <div class="ratting-form">
+                                    <form action="#">
+                                        <div class="star-box">
+                                            <span>Değerlendir:</span>
+                                            <div class="rating-product">
+                                                <i class="ion-android-star"></i>
+                                                <i class="ion-android-star"></i>
+                                                <i class="ion-android-star"></i>
+                                                <i class="ion-android-star"></i>
+                                                <i class="ion-android-star"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="rating-form-style">
+                                                    <input placeholder="İsim" type="text" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="rating-form-style">
+                                                    <input placeholder="Mail Adresi" type="email" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="rating-form-style form-submit">
+                                                    <textarea name="Your Review" placeholder="Yorum"></textarea>
+                                                    <button class="btn btn-primary btn-hover-color-primary " type="submit" value="Submit">Gönder</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section pb-100px" data-aos="fade-up" data-aos-delay="200">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title text-start mb-11">
+                    <h2 class="title">Diğer Kullanıcılar Bunları İnceledi</h2>
+                </div>
+            </div>
+        </div>
+        <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up" data-aos-delay="200">
+            <div class="new-product-wrapper swiper-wrapper">
+                @foreach (var item in Model.Products)
+                {
+                    <div class="new-product-item swiper-slide">
+                        <div class="product">
+                            <div class="thumb">
+                                <a href="/Product/Detail/@item.ProductID" class="image">
+                                    <img src="@item.ImageURL" alt="Product" />
+                                    <img class="hover-image" src="@item.ImageURL" alt="Product" />
+                                </a>
+                                <span class="badges">
+                                    <span class="sale">-10%</span>
+                                    <span class="new">Önerilen</span>
+                                </span>
+                            </div>
+                            <div class="content">
+                                <h5 class="title"><a href="shop-left-sidebar.html">@item.Name </a></h5>
+                                <span class="price">
+                                    <span class="new">₺@item.Price</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- Add Arrows -->
+            <div class="swiper-buttons">
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

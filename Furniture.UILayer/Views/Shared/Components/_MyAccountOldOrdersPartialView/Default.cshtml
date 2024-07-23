@@ -1,0 +1,61 @@
+﻿@model AccountOrdersModel
+
+@{
+    int count = 0;
+}
+
+<div class="panel panel-default single-my-account " data-aos="fade-up" data-aos-delay="600">
+    <div class="panel-heading my-account-title">
+        <h3 class="panel-title">
+            <span>2 .</span> <a data-bs-toggle="collapse" class="collapsed" aria-expanded="false" href="#my-account-3">
+                Siparişlerim
+            </a>
+        </h3>
+    </div>
+    <div id="my-account-3" class="panel-collapse collapse" data-bs-parent="#faq">
+        <div class="panel-body">
+            <div class="myaccount-info-wrapper">
+                <div class="account-info-wrapper">
+                    <h4>Geçmiş Siparişlerim</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Sipariş Numarası</th>
+                                    <th>Ürün Adedi</th>
+                                    <th>Şehir</th>
+                                    <th>İlçe</th>
+                                    <th>Açık Adres</th>
+                                    <th>Sipariş Notu</th>
+                                    <th>Sipariş Tarihi</th>
+                                    <th>Sipariş İşlemi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Orders)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.OrderID</td>
+                                        <td>@item.OrderItems.Count()</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.City</td>
+                                        <td>@item.District</td>
+                                        <td>@item.Address</td>
+                                        <td>@item.OrderNote</td>
+                                        <td>@item.CreatedDate</td>
+                                        <td><a href="/MyAccount/Detail/@item.OrderID" class="btn btn-outline-warning">Detay</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

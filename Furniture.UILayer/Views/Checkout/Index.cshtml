@@ -1,0 +1,200 @@
+﻿@model CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Index.cshtml";
+    double totalAll = 0;
+}
+
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+                            <li class="breadcrumb-item active">Ödeme İşlemleri</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="checkout-area pt-100px pb-100px">
+    <div class="container">
+        <form method="post">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="billing-info-wrap">
+                        <h3>Fatura Detayları</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20px">
+                                    <label>İsim</label>
+                                    <input type="text" asp-for="AppUser.Name" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20px">
+                                    <label>Soyisim</label>
+                                    <input type="text" asp-for="AppUser.Surname" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20px">
+                                    <label>Adres</label>
+                                    <textarea placeholder="Yeni Yüzyıl Üniversitesi, 26, Yılanlı Ayazma Sokağı, Maltepe Mahallesi, Zeytinburnu, 34010, İstanbul/ Turkey" asp-for="Order.Address"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="billing-info mb-20px">
+                                    <label>Şehir</label>
+                                    <input type="text" asp-for="Order.City" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20px">
+                                    <label>İlçe</label>
+                                    <input type="text" asp-for="Order.District" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20px">
+                                    <label>Posta Kodu / ZIP</label>
+                                    <input type="text" asp-for="Order.PostalCode" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20px">
+                                    <label>Telefon</label>
+                                    <input type="text" asp-for="AppUser.PhoneNumber" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info mb-20px">
+                                    <label>Email Adresi</label>
+                                    <input type="text" asp-for="AppUser.Email" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout-account mb-30px">
+                            <input class="checkout-toggle2 w-auto h-auto" type="checkbox" />
+                            <label>Hesabınız Yok Mu?</label>
+                        </div>
+                        <div class="checkout-account-toggle open-toggle2 mb-30">
+                            <button class="btn-hover login-btn"><a href="/Login/SignUp/"> Şimdi Kayıt Ol </a></button>
+                        </div>
+                        <div class="additional-info-wrap">
+                            <h4>Eklemek İstedikleriniz</h4>
+                            <div class="additional-info">
+                                <label>Sipariş Notu</label>
+                                <textarea placeholder="Sipariş hakkındaki notunuz veya teslimat için özel notlar." asp-for="Order.OrderNote"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-md-30px mt-lm-30px ">
+                    <div class="your-order-area">
+                        <h3>Siparişiniz</h3>
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-product-info">
+                                <div class="your-order-top">
+                                    <ul>
+                                        <li>Ürün</li>
+                                        <li>Toplam</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-middle">
+                                    <ul>
+                                        @foreach (var item in Model.CardItems)
+                                        {
+                                            var totalPrice = (item.Product.Price * item.Quantity);
+                                            totalAll += totalPrice;
+
+                                            <li><span class="order-middle-left">@item.Product.Name X @item.Quantity</span> <span class="order-price">₺@totalPrice</span></li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="your-order-bottom">
+                                    <ul>
+                                        <li class="your-order-shipping">Kargo Bedeli</li>
+                                        <li>Ücretsiz Kargo</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-total">
+                                    <ul>
+                                        <li class="order-total">Ara Toplam</li>
+                                        <li>₺@totalAll</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-bottom">
+                                    <ul>
+                                        <li class="your-order-shipping">KDV (%20)</li>
+                                        <li>₺@(totalAll * 0.2)</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-total">
+                                    <ul>
+                                        <li class="order-total">Toplam</li>
+                                        <li>₺@(totalAll * 1.2)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <div class="payment-accordion element-mrg">
+                                    <div id="faq" class="panel-group">
+                                        <div class="panel panel-default single-my-account m-0">
+                                            <div class="panel-heading my-account-title">
+                                                <h4 class="panel-title">
+                                                    <a data-bs-toggle="collapse" href="#my-account-1" class="collapsed" aria-expanded="true">Doğrudan Banka Havalesi</a>
+                                                </h4>
+                                            </div>
+                                            <div id="my-account-1" class="panel-collapse collapse show" data-bs-parent="#faq">
+
+                                                <div class="panel-body">
+                                                    <p>Lütfen Mağaza Adı, Mağaza Caddesi, Mağaza Şehri, Mağaza Eyaleti/İlçesi, Mağaza Posta Kodu'na bir çek gönderin.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default single-my-account m-0">
+                                            <div class="panel-heading my-account-title">
+                                                <h4 class="panel-title"><a data-bs-toggle="collapse" href="#my-account-2" aria-expanded="false" class="collapsed">Ödemeleri kontrol edin</a></h4>
+                                            </div>
+                                            <div id="my-account-2" class="panel-collapse collapse" data-bs-parent="#faq">
+
+                                                <div class="panel-body">
+                                                    <p>Lütfen Mağaza Adı, Mağaza Caddesi, Mağaza Şehri, Mağaza Eyaleti/İlçesi, Mağaza Posta Kodu'na bir çek gönderin.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default single-my-account m-0">
+                                            <div class="panel-heading my-account-title">
+                                                <h4 class="panel-title"><a data-bs-toggle="collapse" href="#my-account-3">Kapıda Ödeme</a></h4>
+                                            </div>
+                                            <div id="my-account-3" class="panel-collapse collapse" data-bs-parent="#faq">
+
+                                                <div class="panel-body">
+                                                    <p>Lütfen Mağaza Adı, Mağaza Caddesi, Mağaza Şehri, Mağaza Eyaleti/İlçesi, Mağaza Posta Kodu'na bir çek gönderin.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Place-order mt-25">
+                            <button type="submit" class="btn btn-warning ">Şiparişi Tamamla</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

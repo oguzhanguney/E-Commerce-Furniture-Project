@@ -1,0 +1,39 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Ürünler</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Görsel</th>
+        <th>#</th>
+        <th>BrandID</th>
+        <th>CategoryID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Color</th>
+        <th>Sitede Gör</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><img src="@item.ImageURL" height="100" width="100"  /></td>
+            <td>@item.ProductID</td>
+            <td>@item.BrandID</td>
+            <td>@item.CategoryID</td>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Color</td>
+            <td><a href="/Product/Detail/@item.ProductID" class="btn btn-outline-info">Sitede Gör</a></td> 
+            <td><a href="/Admin/Product/DeleteProduct/@item.ProductID" class="btn btn-outline-danger">Sil</a></td>
+            <td><a href="/Admin/Product/UpdateProduct/@item.ProductID" class="btn btn-outline-success">Güncelle</a></td>
+        </tr>
+    }
+</table>
+<a href="/Admin/Product/AddProduct" class="btn btn-outline-primary">Yeni Ürün Gir</a>
+

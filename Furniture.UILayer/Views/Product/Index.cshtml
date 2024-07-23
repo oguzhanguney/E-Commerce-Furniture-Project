@@ -1,0 +1,273 @@
+﻿@model ProductListModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Ürünler</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+                            <li class="breadcrumb-item active">Ürünler</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shop-category-area pb-100px pt-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 order-lg-last col-md-12 order-md-first">
+                <div class="shop-top-bar d-flex">
+                    <p>Toplam @ViewBag.CountProducts ürün arasında listeleniyor.</p>
+                    <div class="select-shoing-wrap d-flex align-items-center">
+                        <div class="shot-product">
+                            <p>Sırala:</p>
+                        </div>
+                        <div class="shop-select">
+                            <select class="shop-sort">
+                                <option value="1" data-display="Önerilen">Önerilen</option>
+                                <option value="2"> İsim, A'dan Z'ye</option>
+                                <option value="3"> İsim, Z'den A'ya</option>
+                                <option value="4"> Fiyat, Düşükten Yükseğe</option>
+                                <option value="5"> Fiyat, Yüksekten Düşüğe</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="shop-bottom-area">
+
+                    <div class="row">
+                        @foreach (var item in Model.Products)
+                        {
+                            <div class="col-lg-4  col-md-6 col-sm-6 col-xs-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="product mb-25px">
+                                    <div class="thumb">
+                                        <a href="/Product/Detail/@item.ProductID" class="image">
+                                            <img src="@item.ImageURL" width="306" height="171" alt="Product" />
+                                            <img class="hover-image" src="@item.ImageURL" alt="Product" />
+                                        </a>
+                                        <span class="badges">
+                                            <span class="new">Yeni</span>
+                                        </span>
+                                        <div class="actions">
+                                            <a href="#" class="action wishlist" title="İstek Listesi">
+                                                <i class="icon-heart"></i>
+                                            </a>
+                                            <a href="#" class="action quickview" data-link-action="quickview" title="Hızlı Gör" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen"></i></a>
+                                            <a href="#" class="action compare" title="Karşılaştır">
+                                                <i class="icon-refresh"></i>
+                                            </a>
+                                        </div>
+                                        @if(User.Identity.IsAuthenticated)
+                                        {
+                                            <form method="post">
+                                                <input type="hidden" value="1" asp-for="ProductCardViewModel.CardItem.Quantity" />
+                                                <input type="hidden" value="@item.ProductID" asp-for="ProductCardViewModel.CardItem.ProductId" />
+                                                <input type="hidden" value="@ViewBag.cardId" asp-for="ProductCardViewModel.CardItem.CardId" />
+
+                                                <div class="pro-details-cart">
+                                                    <button type="submit" title="Add To Cart" class="add-to-cart" href="/Product/Index/">
+                                                        Sepete Ekle
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <div class="pro-details-cart">
+                                                <button type="button" disabled class="add-to-cart" href="#">
+                                                    Sepete Ekle
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title"><a href="shop-left-sidebar.html">@item.Name @item.Color</a></h5>
+                                        <span class="price">
+                                            <span class="new">₺@item.Price</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @* <div class="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-30px" data-aos="fade-up">
+                    <ul>
+                    <li>
+                    <a class="prev" href="#"><i class="ion-ios-arrow-left"></i></a>
+                    </li>
+                    <li><a class="active" href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li>
+                    <a class="next" href="#"><i class="ion-ios-arrow-right"></i></a>
+                    </li>
+                    </ul>
+                    </div> *@
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-first col-md-12 order-md-last mb-md-60px mb-lm-60px">
+                <div class="shop-sidebar-wrap">
+                    <div class="sidebar-widget">
+                        <div class="main-heading">
+                            <h3 class="sidebar-title">Kategoriler</h3>
+                        </div>
+                        <div class="sidebar-widget-category">
+                            <ul>
+                                <li><a href="/Product/Index" class="selected">Hepsi <span>@Model.Products.Count()</span> </a></li>
+                                @foreach (var item in Model.Categories)
+                                {
+                                    var productCount = Model.Products.Count(p => p.CategoryID == item.CategoryID);
+                                    <li><a href="/Product/Index/@item.CategoryID" class="">@item.Name <span>(@productCount)</span> </a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget-group">
+                        <h3 class="sidebar-title">Filtrele</h3>
+                        <div class="sidebar-widget">
+                            <h4 class="pro-sidebar-title">Fiyat</h4>
+                            <div class="price-filter">
+                                <div class="price-slider-amount">
+                                    <input type="text" id="amount" class="p-0 h-auto lh-1" name="price" placeholder="Add Your Price" />
+                                </div>
+                                <div id="slider-range"></div>
+                            </div>
+                        </div>
+                        <div class="sidebar-widget">
+                            <h4 class="pro-sidebar-title mt-5">Size</h4>
+                            <div class="sidebar-widget-list">
+                                <ul>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" /> <a href="#">Large <span>(4)</span> </a>
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">
+                                                Medium
+                                                <span>(4)</span>
+                                            </a>
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">
+                                                Small <span>(4)</span>
+                                            </a>
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">
+                                                Extra
+                                                Large<span>(4)</span>
+                                            </a>
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar single item -->
+                        <div class="sidebar-widget no-cba">
+                            <h4 class="pro-sidebar-title">Colour</h4>
+                            <div class="sidebar-widget-list">
+                                <ul>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" /> <a href="#">Grey<span>(2)</span> </a>
+                                            <span class="checkmark grey"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">White<span>(4)</span></a>
+                                            <span class="checkmark white"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">
+                                                Black<span>(4)</span>
+                                            </a>
+                                            <span class="checkmark black"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">
+                                                Camel<span>(4)</span>
+                                            </a>
+                                            <span class="checkmark camel"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar single item -->
+                        <div class="sidebar-widget">
+                            <h4 class="pro-sidebar-title">Brand</h4>
+                            <div class="sidebar-widget-list">
+                                <ul>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" /> <a href="#">
+                                                Studio Design<span>(10)</span>
+                                            </a>
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-widget-list-left">
+                                            <input type="checkbox" value="" /> <a href="#">
+                                                Graphic
+                                                Corner<span>(7)</span>
+                                            </a>
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sidebar single item -->
+                    <div class="sidebar-widget tag">
+                        <div class="main-heading">
+                            <h3 class="sidebar-title mt-3">Tags</h3>
+                        </div>
+                        <div class="sidebar-widget-tag">
+                            <ul>
+                                <li><a href="#">All</a></li>
+                                <li><a href="#">Accessories</a></li>
+                                <li><a href="#">Chair</a></li>
+                                <li><a href="#">Decoration</a></li>
+                                <li><a href="#">Furniture</a></li>
+                                <li><a href="#">Sofa</a></li>
+                                <li><a href="#">Table</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Sidebar single item -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

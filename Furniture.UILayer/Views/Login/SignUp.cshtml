@@ -1,0 +1,89 @@
+﻿@model UserRegisterViewModel
+
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Layout/Index.cshtml";
+}
+
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Login</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="login-register-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        <a class="active" data-bs-toggle="tab" href="#lg1">
+                            <h4>Kayıt Ol</h4>
+                        </a>
+                    </div>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form method="post">
+                                        <div class="form-input">
+                                            <label>Adınız</label>
+                                            <input type="text" asp-for="Name" />
+                                            <span asp-validation-for="Name" style="color:red" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-input">
+                                            <label>Soyadınız</label>
+                                            <input type="text" asp-for="Surname" />
+                                            <span asp-validation-for="Surname" style="color:red" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-input">
+                                            <label>Kullanıcı Adınız</label>
+                                            <input type="text" asp-for="Username" />
+                                            <span asp-validation-for="Username" style="color:red" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-input">
+                                            <label>Mail Adresiniz</label>
+                                            <input type="email" asp-for="Mail" />
+                                            <span asp-validation-for="Mail" style="color:red" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-input">
+                                            <label>Parola</label>
+                                            <input type="password" asp-for="Password" />
+                                            <span asp-validation-for="Password" style="color:red" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-input">
+                                            <label>Parola Tekrar</label>
+                                            <input type="password" asp-for="ConfirmPassword" />
+                                            <span asp-validation-for="ConfirmPassword" style="color:red" class="text-danger"></span>
+                                        </div>
+                                        
+                                        <div class="button-box">
+                                            <button type="submit"><span>Kayıt Ol</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
