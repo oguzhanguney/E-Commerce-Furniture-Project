@@ -1,4 +1,4 @@
-<h2> CEN-440 E-COMMERCE</h2>
+
 <h3> E-Commerce Furniture Web Application </h3>
 
 <h5> Project Content </h5>
